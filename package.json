@@ -1,12 +1,19 @@
 {
   "name": "discord-quest-selfbot",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Automated Discord quest completion selfbot with a typed quest orchestrator, structured logging and a full console UI.",
   "main": "index.js",
   "scripts": {
-    "start": "tsx --env-file-if-exists=.env bot.ts",
-    "dev": "tsx --env-file-if-exists=.env --inspect-brk bot.ts",
-    "github": "tsx bot.ts",
+    "start": "tsx --env-file-if-exists=.env src/main.ts start",
+    "dev": "tsx --env-file-if-exists=.env --inspect-brk src/main.ts start",
+    "github": "tsx src/main.ts start",
+    "list": "tsx --env-file-if-exists=.env src/main.ts list",
+    "redeem": "tsx --env-file-if-exists=.env src/main.ts redeem",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint .",
+    "format": "prettier --write .",
     "typecheck": "tsc --noEmit"
   },
   "keywords": [],
@@ -18,14 +25,20 @@
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
+    "@vitest/coverage-v8": "^5.0.3",
     "discord-api-types": "^0.38.42",
+    "eslint": "^10.11.0",
+    "prettier": "^3.9.9",
     "tsx": "^4.21.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.71.0",
+    "vitest": "^5.0.3"
   },
   "dependencies": {
     "@discordjs/core": "2.4.0",
     "@discordjs/rest": "2.6.0",
     "@discordjs/ws": "2.0.4",
-    "undici": "^6.24.1"
+    "undici": "^6.24.1",
+    "zod": "^4.6.5"
   }
 }
