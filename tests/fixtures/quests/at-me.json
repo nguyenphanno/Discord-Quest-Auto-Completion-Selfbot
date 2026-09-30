@@ -1,0 +1,118 @@
+{
+  "quests": [
+    {
+      "id": "111111111111111111",
+      "config": {
+        "id": "111111111111111111",
+        "config_version": 1,
+        "starts_at": "2026-09-01T00:00:00.000000+00:00",
+        "expires_at": "2099-01-01T00:00:00.000000+00:00",
+        "features": 0,
+        "application": { "id": "900000000000000001", "name": "Video Quest" },
+        "assets": {
+          "hero": "quest_hero_1",
+          "hero_video": null,
+          "quest_bar_hero": "quest_bar_hero_1",
+          "quest_bar_hero_video": null,
+          "game_tile": "quest_game_tile_1",
+          "logotype": "quest_logotype_1"
+        },
+        "colors": { "primary": "#5865f2", "secondary": "#eb459e" },
+        "messages": {
+          "quest_name": "Watch a video",
+          "game_title": "Video Quest",
+          "game_publisher": "Example Publisher"
+        },
+        "task_config_v2": {
+          "tasks": {
+            "WATCH_VIDEO": { "event_name": "WATCH_VIDEO", "target": 20, "type": "WATCH_VIDEO" }
+          },
+          "join_operator": "or"
+        },
+        "rewards_config": {
+          "assignment_method": 0,
+          "rewards": [
+            {
+              "type": 4,
+              "sku_id": "123456789012345678",
+              "messages": {
+                "name": "Reward Code",
+                "name_with_article": "a Reward Code"
+              }
+            }
+          ],
+          "rewards_expire_at": null,
+          "platforms": [0]
+        }
+      },
+      "user_status": null,
+      "preview": false,
+      "traffic_metadata_sealed": "redacted-sealed",
+      "traffic_metadata_raw": "redacted-raw"
+    },
+    {
+      "id": "222222222222222222",
+      "config": {
+        "id": "222222222222222222",
+        "config_version": 1,
+        "starts_at": "2026-09-01T00:00:00.000000+00:00",
+        "expires_at": "2099-01-01T00:00:00.000000+00:00",
+        "features": 0,
+        "application": { "id": "900000000000000002", "name": "Finished Quest" },
+        "assets": {
+          "hero": "quest_hero_2",
+          "hero_video": null,
+          "quest_bar_hero": "quest_bar_hero_2",
+          "quest_bar_hero_video": null,
+          "game_tile": "quest_game_tile_2",
+          "logotype": "quest_logotype_2"
+        },
+        "colors": { "primary": "#57f287", "secondary": "#fee75c" },
+        "messages": {
+          "quest_name": "Already watched",
+          "game_title": "Finished Quest",
+          "game_publisher": "Example Publisher"
+        },
+        "task_config_v2": {
+          "tasks": {
+            "WATCH_VIDEO": { "event_name": "WATCH_VIDEO", "target": 600, "type": "WATCH_VIDEO" }
+          },
+          "join_operator": "or"
+        },
+        "rewards_config": {
+          "assignment_method": 0,
+          "rewards": [
+            {
+              "type": 4,
+              "sku_id": "123456789012345679",
+              "messages": {
+                "name": "Finished Reward",
+                "name_with_article": "a Finished Reward"
+              }
+            }
+          ],
+          "rewards_expire_at": null,
+          "platforms": [0]
+        }
+      },
+      "user_status": {
+        "user_id": "1",
+        "quest_id": "222222222222222222",
+        "enrolled_at": "2026-09-02T00:00:00.000000+00:00",
+        "completed_at": "2026-09-02T01:00:00.000000+00:00",
+        "claimed_at": null,
+        "progress": {
+          "WATCH_VIDEO": {
+            "event_name": "WATCH_VIDEO",
+            "value": 600,
+            "updated_at": "2026-09-02T01:00:00.000000+00:00",
+            "completed_at": "2026-09-02T01:00:00.000000+00:00"
+          }
+        }
+      },
+      "preview": false
+    }
+  ],
+  "excluded_quests": [],
+  "quest_enrollment_blocked_until": null
+}
