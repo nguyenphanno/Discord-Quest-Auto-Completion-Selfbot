@@ -1,0 +1,31 @@
+{
+  "name": "discord-quest-selfbot",
+  "version": "1.1.0",
+  "description": "Automated Discord quest completion selfbot with a typed quest orchestrator, structured logging and a full console UI.",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsx --env-file-if-exists=.env bot.ts",
+    "dev": "tsx --env-file-if-exists=.env --inspect-brk bot.ts",
+    "github": "tsx bot.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "nguyenphanno",
+  "license": "GPL-3.0-only",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=24"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "discord-api-types": "^0.38.42",
+    "tsx": "^4.21.0",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@discordjs/core": "2.4.0",
+    "@discordjs/rest": "2.6.0",
+    "@discordjs/ws": "2.0.4",
+    "undici": "^6.24.1"
+  }
+}

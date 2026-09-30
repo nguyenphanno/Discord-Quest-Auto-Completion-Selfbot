@@ -1,0 +1,45 @@
+name: Run quest auto completion bot
+
+on:
+    workflow_dispatch: {}
+    schedule:
+        - cron: '15 0 * * *'
+
+jobs:
+    run-bot:
+        runs-on: ubuntu-latest
+        timeout-minutes: 60
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Use Node.js 24
+              uses: actions/setup-node@v6
+              with:
+                  node-version: '24'
+
+            - name: Install dependencies
+              run: |
+                  if [ -f package-lock.json ]; then
+                    npm ci
+                  else
+                    npm install
+                  fi
+
+            - name: Typecheck
+              run: npm run typecheck
+
+            - name: Run the bot
+              env:
+                  TOKEN: ${{ secrets.TOKEN }}
+                  WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+                  YES_CAPTCHA_API_KEY: ${{ secrets.YES_CAPTCHA_API_KEY }}
+                  REDEEM_REWARDS: ${{ vars.REDEEM_REWARDS }}
+                  QUEST_CONCURRENCY: ${{ vars.QUEST_CONCURRENCY }}
+                  QUEST_INCLUDE: ${{ vars.QUEST_INCLUDE }}
+                  QUEST_EXCLUDE: ${{ vars.QUEST_EXCLUDE }}
+                  LOG_LEVEL: ${{ vars.LOG_LEVEL }}
+                  LOG_ASCII: ${{ vars.LOG_ASCII }}
+              run: |
+                  npm run github
