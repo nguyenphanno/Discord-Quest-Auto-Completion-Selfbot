@@ -328,8 +328,18 @@ export class QuestBotApplication {
 	}
 
 	private printCannotStart(errors: readonly string[]): void {
-		this.log.raw(Blocks.panel([...errors], { title: 'CANNOT START', color: 'red' }));
+		printCannotStart(errors);
 	}
+}
+
+/**
+ * The single "you cannot run" panel: a red border plus one line per problem.
+ *
+ * Exported so the CLI entry point can render the same panel when the
+ * configuration itself could not be read, before an application exists.
+ */
+export function printCannotStart(errors: readonly string[]): void {
+	Logger.root.raw(Blocks.panel([...errors], { title: 'CANNOT START', color: 'red' }));
 }
 
 

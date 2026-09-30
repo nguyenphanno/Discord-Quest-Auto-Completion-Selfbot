@@ -9,11 +9,25 @@ import type { QuestBotConfig } from './schema';
 
 const truthy = new Set(['1', 'true', 'yes', 'on', 'y']);
 const falsy = new Set(['0', 'false', 'no', 'off', 'n']);
-const envSchema = z.record(z.string(), z.string().optional());
+
+/**
+ * A single environment entry: trimmed, and an all-whitespace value is treated
+ * as "not set" so callers only ever deal with `string | null`.
+ *
+ * `process.env` is a host object rather than a plain record, so the environment
+ * is read one key at a time. Parsing the whole object at once made every start
+ * fail on a Zod type error instead of reaching the CANNOT START panel.
+ */
+const envValue = z
+	.string()
+	.transform((raw) => raw.trim())
+	.transform((raw) => (raw.length > 0 ? raw : null));
 
 function value(env: NodeJS.ProcessEnv, key: string): string | null {
-	const parsed = envSchema.parse(env)[key]?.trim();
-	return parsed || null;
+	const raw: unknown = (env as Record<string, unknown>)[key];
+	// A missing key is `undefined`; anything that is not a string is ignored
+	// rather than crashing the run.
+	return typeof raw === 'string' ? envValue.parse(raw) : null;
 }
 
 function boolean(env: NodeJS.ProcessEnv, key: string, fallback: boolean): boolean {

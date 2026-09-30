@@ -128,6 +128,38 @@ describe('loadConfig', () => {
 	});
 });
 
+describe('loadConfig robustness', () => {
+	it('reads the real process.env without throwing', () => {
+		// Regression: parsing the whole environment as a Zod record failed
+		// because `process.env` is a host object, not a plain record, which
+		// surfaced as a raw stack before the CANNOT START panel could render.
+		expect(() => loadConfig(process.env)).not.toThrow();
+	});
+
+	it('tolerates a missing .env by falling back to the defaults', () => {
+		const config = loadConfig({} as NodeJS.ProcessEnv);
+		expect(config.token).toBe('');
+		expect(config.concurrency).toBe(2);
+		expect(config.reportDirectory).toBe('reports');
+	});
+
+	it('ignores non string values instead of crashing', () => {
+		const hostile = { TOKEN: 42, QUEST_CONCURRENCY: {}, DRY_RUN: [] } as unknown as NodeJS.ProcessEnv;
+		expect(() => loadConfig(hostile)).not.toThrow();
+		expect(loadConfig(hostile).token).toBe('');
+	});
+
+	it('treats a whitespace-only value as unset', () => {
+		const config = loadConfig({ TOKEN: '   ', QUEST_CONCURRENCY: '  ' } as NodeJS.ProcessEnv);
+		expect(config.token).toBe('');
+		expect(config.concurrency).toBe(2);
+	});
+
+	it('trims the token it does receive', () => {
+		expect(loadConfig({ TOKEN: '  aaa.bbb.ccc  ' } as NodeJS.ProcessEnv).token).toBe('aaa.bbb.ccc');
+	});
+});
+
 describe('configErrors', () => {
 	it('reports a missing token', () => {
 		expect(configErrors(loadConfig({ TOKEN: '' })).join('\n')).toMatch(/TOKEN is missing/);

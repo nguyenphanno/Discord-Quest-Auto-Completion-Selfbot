@@ -116,17 +116,22 @@ describe('QuestBotApplication', () => {
 	});
 
 	it('prints the CANNOT START panel and exits 1 for an empty token', async () => {
-		const { value } = await captureStdout(() =>
+		const { value, output } = await captureStdout(() =>
 			new QuestBotApplication({ ...config, token: '' }).run('start'),
 		);
 		expect(value).toBe(ExitCode.Failure);
+		expect(output).toContain('CANNOT START');
+		// The panel, not a stack trace, is what the operator has to act on.
+		expect(output).not.toContain('at Object.');
+		expect(output).not.toContain('Error:');
 	});
 
 	it('never throws a stack for a missing token', async () => {
-		const { value } = await captureStdout(async () =>
+		const { value, output } = await captureStdout(async () =>
 			new QuestBotApplication({ ...config, token: '' }).run('start'),
 		);
 		expect(value).toBe(ExitCode.Failure);
+		expect(output).toContain('CANNOT START');
 	});
 
 	it('reads the cache and exits 0 for status, without a token', async () => {
